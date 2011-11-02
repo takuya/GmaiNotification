@@ -1,0 +1,48 @@
+GmailNotify
+
+Gmailにメールが届いたら、Growlで通知する
+
+
+Mac版のGoogleTalkが存在しないので、Rubyで通知機能を作った。
+
+
+使い方
+----------------
+require 'gmailnotify.rb'
+
+xmpp_client = GmailNotify.new("takuya.XXX@gmail.com", "++password++")
+xmpp_client.start
+
+必要なもの
+---------------------
+1: xmpp4rライブラリ。  (gem install xmpp4r)
+2: growl + growlnotify (http://growl.info/extras.php#growlnotify)
+
+
+
+説明
+----------------------
+
+iChatでチャットはできるが、メール通知ができない。
+Google Talk　＝　<gmail notify> + <jabber Client>
+
+MachではiChat ＝　＜Jabber Client> である。
+Gmail通知がないと、Mac環境ではGoogleTalk同等にならない。
+
+そこで rubyで実装した。
+
+Google Talkにはメール受信をXMPP経由での通知機能がある。
+
+メール着信時に通知を受けるので、とてもレスポンスがリアルタイム。
+もともとXMPPというチャット用のプロトコルなので、通知が速い。
+
+xmpp4rの問題点、Thread#abort_on_exception=true を使い倒す
+なので、エラーのキャッチが面倒。専用のエラーハンドラが機能不足で、ハンドラがCallされる前にthreadがAbortする
+
+-------------------------
+Gmail側のXMPP独自拡張の仕様
+-------------------------
+Gmail Notifications : http://code.google.com/apis/talk/jep_extensions/gmail.html
+
+
+
